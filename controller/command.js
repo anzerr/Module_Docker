@@ -12,7 +12,7 @@ module.exports = function($) {
 		var obj = function() {};
 		obj.prototype = {
 			buildFile: function(data) {
-				var a = build.get(data.body.release);
+				var a = build.get(util.image(data.body.release));
 				if (a) {
 					return ($.file.write(appRoot.absolute + '/DockerFile', a.toString()).then(function() {
 						process.exit();
