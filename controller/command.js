@@ -14,7 +14,12 @@ module.exports = function($) {
 			buildFile: function(data) {
 				var a = build.get(data.body.release);
 				if (a) {
-					return ($.file.write(appRoot.absolute + '/DockerFile', a.toString()));
+					return ($.file.write(appRoot.absolute + '/DockerFile', a.toString()).then(function() {
+						process.exit();
+						return (true);
+					}, function(err) {
+						throw new Error(err);
+					}));
 				}
 				throw new Error(data.body.release + ' is not a valid object');
 			},
