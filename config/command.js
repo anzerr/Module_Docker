@@ -9,6 +9,14 @@ module.exports = function() {
 				controller: 'command',
 				method: 'release'
 			}
+		},
+		{
+			api: ['command'],
+			path: '/hyperion/buildfile',
+			action: {
+				controller: 'command',
+				method: 'buildFile'
+			}
 		}
 	]);
 };

@@ -2,13 +2,23 @@
 
 module.exports = function($) {
 	return $.require([
+        'hyperion!build.js',
 		'module!/entity/build.js'
 	], function(
+		build,
 		util
 	) {
 
 		var obj = function() {};
 		obj.prototype = {
+			buildFile: function(data) {
+				var a = build.get(data.body.release);
+				if (a) {
+					return ($.file.write(appRoot.absolute + '/DockerFile', a.toString()));
+				}
+				throw new Error(data.body.release + ' is not a valid object');
+			},
+			
 			release: function(data) {
 				var s = $.service('hyperion'), tag = ((data.body.tag) ? '-' + data.body.tag : '');
 				var ver = new $.promise(), done = false, build = {name: util.image(data.body.release), version: data.body.version || '0.0.0'};
